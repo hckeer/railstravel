@@ -1,0 +1,17 @@
+<!-- app/views/applications/index.html.erb -->
+<div class="container">
+  <h2>Job Applications</h2>
+  
+  <% @applications.each do |application| %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= application.post.title %></h5>
+        <p class="card-text">
+          <strong>Applicant:</strong> <%= application.client.name %><br>
+          <strong>Email:</strong> <%= application.client.email %><br>
+          <strong>Status:</strong> <%= application.status %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
