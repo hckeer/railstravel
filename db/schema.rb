@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_16_135425) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_18_152103) do
   create_table "applications", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "client_id", null: false
@@ -31,6 +31,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_16_135425) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string "title"
+    t.integer "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_chat_rooms_on_organization_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -47,6 +55,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_16_135425) do
     t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "user_type"
+    t.integer "chat_room_id"
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+    t.index ["user_type", "user_id"], name: "index_messages_on_user_type_and_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -71,4 +84,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_16_135425) do
 
   add_foreign_key "applications", "clients"
   add_foreign_key "applications", "posts"
+  add_foreign_key "chat_rooms", "organizations"
+  add_foreign_key "messages", "chat_rooms"
 end

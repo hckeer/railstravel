@@ -1,0 +1,27 @@
+<!-- app/views/chat_rooms/show.html.erb -->
+<div class="container">
+  <% if @chat_room %>
+    <h1><%= @chat_room.title %></h1>
+    
+    <div id="messages" class="mb-3">
+      <% if @chat_room.messages.any? %>
+        <%= render @messages || @chat_room.messages.order(:created_at) %>
+      <% else %>
+        <div class="alert alert-info">No messages yet</div>
+      <% end %>
+    </div>
+
+    <%= form_with model: [@chat_room, @message], local: false do |f| %>
+      <div class="form-group">
+        <%= f.text_area :content, class: "form-control", rows: 3, required: true %>
+      </div>
+      <%= f.submit "Send", class: "btn btn-primary" %>
+    <% end %>
+    
+  <% else %>
+    <div class="alert alert-danger">
+      Chat room not found or you don't have permission to view it
+    </div>
+    <%= link_to "Back to chat rooms", chat_rooms_path, class: "btn btn-secondary" %>
+  <% end %>
+</div>

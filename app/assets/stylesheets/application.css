@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+ /* app/assets/stylesheets/application.css */
+.message {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.current-user {
+  background-color: #e3f2fd;
+  margin-left: 20%;
+  text-align: right;
+}
+
+.other-user {
+  background-color: #f1f1f1;
+  margin-right: 20%;
+}

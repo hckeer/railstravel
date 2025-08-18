@@ -1,0 +1,51 @@
+<!-- app/views/chat_rooms/index.html.erb -->
+<!-- app/views/chat_rooms/index.html.erb -->
+<div class="container">
+  <h1>Your Chat Rooms</h1>
+  
+  <% if @chat_rooms&.any? %>
+    <% @chat_rooms.each do |chat_room| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= chat_room.title %></h5>
+          <%= link_to "Enter Chat", chat_room_path(chat_room), class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info">
+      No chat rooms available
+      <% if current_user.is_a?(Organization) %>
+        <%= link_to "Create your first chat room", new_chat_room_path, class: "btn btn-link" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- app/views/chat_rooms/show.html.erb -->
+<div class="container">
+  <h1><%= @chat_room.title %></h1>
+  
+  <div id="messages" class="mb-3">
+    <%= render @messages %>
+
+  </div>
+  
+  <%= form_with model: [@chat_room, @message], local: false do |f| %>
+    <div class="form-group">
+      <%= f.text_area :content, class: "form-control", rows: 3 %>
+    </div>
+    <%= f.submit "Send", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<!-- app/views/messages/_message.html.erb -->
+<div class="card mb-2">
+  <div class="card-body">
+    <strong><%= message.user.name %>:</strong>
+    <%= message.content %>
+    <div class="text-muted small">
+      <%= message.created_at.strftime("%b %e, %l:%M %p") %>
+    </div>
+  </div>
+</div>

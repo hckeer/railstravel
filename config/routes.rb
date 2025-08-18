@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "messages/create"
+  get "chat_rooms/index"
+  get "chat_rooms/show"
   
   
   get "applications/create"
@@ -27,6 +30,9 @@ Rails.application.routes.draw do
   post 'signup', to: 'registrations#create'
   get 'applications', to: 'applications#index', as: :applications
   
+  resources :chat_rooms, only: [:index, :show] do
+  resources :messages, only: :create
+end
   resources :posts, only: [:index, :new, :create] do
     resources :applications, only: [:create]
   end

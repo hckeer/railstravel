@@ -1,4 +1,5 @@
+# app/models/organization.rb
 class Organization < ApplicationRecord
-  has_many :posts, as: :author
-  has_many :applications, through: :posts
+  has_many :chat_rooms, dependent: :restrict_with_error
+  has_many :messages, as: :user
 end

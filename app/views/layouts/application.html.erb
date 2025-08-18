@@ -6,6 +6,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= action_cable_meta_tag %>
+
   <%= javascript_importmap_tags %>
   <style>
     body {
@@ -187,6 +189,16 @@
       <nav>
         <h1>Tours and Travels application Prototype</h1>
         <div class="nav-links">
+  <% if logged_in? %>
+    <%= link_to "Posts", posts_path %>
+    <%= link_to "Chat", chat_rooms_path %>
+    <%= link_to "Logout", logout_path, method: :delete %>
+  <% else %>
+    <%= link_to "Login", login_path %>
+    <%= link_to "Sign Up", signup_path %>
+  <% end %>
+</div>
+        <div class="nav-links">
           <% if logged_in? %>
             <%= link_to "New Post", new_post_path %>
             <% if current_user.is_a?(Organization) %>
@@ -199,9 +211,7 @@
           <% end %>
           
 
-          
-
-
+      
 
         </div>
       </nav>
